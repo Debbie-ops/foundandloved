@@ -49,7 +49,7 @@ export default function MissionSection() {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundAttachment: "fixed", // This creates the stagnant effect
-                transform: `translateY(${parallaxOffset * -0.6}px)`, // Move background slightly
+                transform: `translateY(${parallaxOffset * -0.0}px)`, // Move background slightly
               }}
             />
 

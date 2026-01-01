@@ -718,7 +718,7 @@ function MissionSection() {
                                         backgroundSize: "cover",
                                         backgroundPosition: "center",
                                         backgroundAttachment: "fixed",
-                                        transform: `translateY(${parallaxOffset * -0.6}px)`
+                                        transform: `translateY(${parallaxOffset * -0.0}px)`
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/components/sections/MissionSection.jsx",

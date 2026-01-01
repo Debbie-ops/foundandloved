@@ -626,7 +626,7 @@ function OurStoryPage() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-lg text-foreground/70 leading-relaxed",
-                                    children: "Our work centers on a home and school in Chunga. This page explains who runs the home, how it is sustained, how the school serves both the home and the community, and what growth is needed next."
+                                    children: "Established in 2019 our work centers on a home and school in Chunga, Zambia.  How it is sustained, how the school serves both the home and the community, and what growth is needed next."
                                 }, void 0, false, {
                                     fileName: "[project]/app/our-story/page.jsx",
                                     lineNumber: 99,

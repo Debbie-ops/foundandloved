@@ -97,7 +97,7 @@ export default function OurStoryPage() {
               A safe home where children can breathe, learn, and belong
             </h1>
             <p className="text-lg text-foreground/70 leading-relaxed">
-              Our work centers on a home and school in Chunga. This page explains who runs the home, how it is sustained,
+              Established in 2019 our work centers on a home and school in Chunga, Zambia.  How it is sustained,
               how the school serves both the home and the community, and what growth is needed next.
             </p>
           </div>
