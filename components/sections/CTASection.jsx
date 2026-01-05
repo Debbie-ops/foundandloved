@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function CTASection() {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl" />
+      <div className="absolute inset-0 bg-white rounded-3xl" />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center fade-in-up" data-animate id="cta-section">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">

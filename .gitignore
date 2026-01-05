@@ -4,3 +4,7 @@ build/
 .env
 .env.local
 .env.production
+.next/
+.next/cache/
+.next/temp/
+.next/dev/cache/turbopack/

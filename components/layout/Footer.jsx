@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground/5 border-t border-border py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-gradient-to-r from-primary/10 to-accent/10 border-t border-border py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand Column */}

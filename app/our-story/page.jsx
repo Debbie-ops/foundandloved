@@ -78,7 +78,7 @@ export default function OurStoryPage() {
   const isVisible = (id) => visibleSections.has(id)
 
   return (
-    <div className="bg-background text-foreground">
+    <div className="bg-white text-foreground">
       <Header activeSection="home" onNavigate={handleNavigate} />
 
       <main>

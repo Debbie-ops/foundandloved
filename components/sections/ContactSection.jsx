@@ -35,7 +35,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-muted/30">
+    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-white">
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="text-center fade-in-up mb-16" data-animate id="contact-title">
           <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">

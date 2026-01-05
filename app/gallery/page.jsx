@@ -217,7 +217,7 @@ export default function GalleryPage() {
     : GALLERY_ITEMS.filter(item => item.category === selectedCategory)
 
   return (
-    <div className="bg-background text-foreground">
+    <div className="bg-white text-foreground">
       <Header 
         activeSection="gallery" 
         onNavigate={handleNavigate}

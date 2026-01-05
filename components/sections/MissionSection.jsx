@@ -34,7 +34,7 @@ export default function MissionSection() {
   }, [imageRef])
 
   return (
-    <section id="mission" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-muted/30">
+    <section id="mission" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-white">
       <div className="relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
           {/* Parallax Image Section - FIXED VERSION */}
