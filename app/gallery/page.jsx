@@ -372,7 +372,7 @@ export default function GalleryPage() {
                         fill 
                         className="object-cover group-hover:scale-110 transition-transform duration-700" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500" />
                       <div className="absolute bottom-4 left-4 right-4">
                         <div className="inline-flex px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-2">

@@ -1,21 +1,74 @@
-import { SERVICES } from "@/lib/constants"
-import AnimatedEmoji from "@/components/ui/AnimatedEmoji"
+import { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+import { SERVICES } from "@/lib/constants";
 
 export default function ServicesSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      const reveals = el.querySelectorAll(".fade-in-up, [data-animate]");
+      gsap.from(reveals, {
+        autoAlpha: 0,
+        y: 30,
+        stagger: 0.12,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 85%" },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="text-center fade-in-up mb-16" data-animate id="services-title">
-          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
-            <span className="text-2xl">🎁</span>
-            <span className="font-semibold text-primary">Comprehensive Support</span>
+    <section
+      id="services"
+      ref={sectionRef}
+      className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-background min-h-screen flex items-center"
+    >
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
+        <div className="text-center mb-16">
+          <div
+            className={`inline-flex items-center gap-2 bg-primary/10 border border-primary/30 px-4 py-2 rounded-full mb-6 transition-all duration-1000 ${
+              isVisible ? "fade-in-up" : "opacity-0"
+            }`}
+            style={{ animationDelay: "0.1s" }}
+          >
+            <span className="font-semibold text-primary">
+              Comprehensive Support
+            </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            What We{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Provide</span>
+          <h2
+            className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 ${
+              isVisible ? "fade-in-up" : "opacity-0"
+            }`}
+            style={{ animationDelay: "0.2s" }}
+            data-animate
+            id="services-title"
+          >
+            <span className="text-foreground">What We</span>
+            <br />
+            <span className="text-primary">Provide</span>
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
-            Every aspect of a child's wellbeing—physical, emotional, educational, and social
+          <p
+            className={`text-xl text-foreground/70 max-w-2xl mx-auto transition-all duration-1000 ${
+              isVisible ? "fade-in-up" : "opacity-0"
+            }`}
+            style={{ animationDelay: "0.3s" }}
+          >
+            Every aspect of a child's wellbeing—physical, emotional,
+            educational, and social
           </p>
         </div>
 
@@ -24,18 +77,26 @@ export default function ServicesSection() {
           {SERVICES.map((service, idx) => (
             <div
               key={idx}
-              className="scale-in group bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/50 cursor-pointer"
+              className={`group glow-border rounded-2xl p-8 hover-lift transition-all duration-500 ${
+                isVisible ? "fade-in-up" : "opacity-0"
+              }`}
               data-animate
               id={`service-${idx}`}
-              style={{ animationDelay: `${idx * 80}ms` }}
+              style={{ animationDelay: `${idx * 120}ms` }}
             >
-              <AnimatedEmoji emoji={service.emoji} size="5xl" delay={idx * 80} className="group-hover:scale-110" />
-              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-foreground/70">{service.desc}</p>
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 text-primary font-semibold text-xl">
+                {idx + 1}
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">
+                {service.title}
+              </h3>
+              <p className="text-foreground/70 leading-relaxed">
+                {service.desc}
+              </p>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

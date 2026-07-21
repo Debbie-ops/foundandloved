@@ -30,7 +30,7 @@ export default function ContactForm() {
         />
         <button
           type="submit"
-          className="w-full px-6 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+          className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
         >
           Send Message
         </button>

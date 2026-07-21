@@ -1,116 +1,153 @@
-"use client"
+"use client";
 
-import { MISSION_ITEMS } from "@/lib/constants"
-import useParallax from "@/hooks/useParallax"
-import { useEffect, useState } from "react"
-import { HeartHandshake, Home, Shield, Sparkles } from "lucide-react"
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const MISSION_ICONS = {
-  shield: Shield,
-  home: Home,
-  "heart-handshake": HeartHandshake,
-}
+gsap.registerPlugin(ScrollTrigger);
 
 export default function MissionSection() {
-  const [imageRef, parallaxOffset] = useParallax(0.3)
-  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef(null);
+  const bgRef = useRef(null);
+  const groupRef = useRef(null);
+  const w1 = useRef(null);
+  const w2 = useRef(null);
+  const w3 = useRef(null);
+  const para = useRef(null);
 
-  // Optional: Trigger animations on scroll
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
+  const section = sectionRef.current;
+  if (!section) return;
+
+  const mm = gsap.matchMedia();
+
+  const ctx = gsap.context(() => {
+    mm.add(
+      {
+        isMobile: "(max-width: 767px)",
+        isTablet: "(min-width: 768px) and (max-width: 1023px)",
+        isDesktop: "(min-width: 1024px)",
       },
-      { threshold: 0.1 }
-    )
+      (context) => {
+        const { isMobile, isTablet } = context.conditions;
 
-    if (imageRef.current) {
-      observer.observe(imageRef.current)
-    }
+        const offscreenY = isMobile ? 120 : isTablet ? 160 : 200;
 
-    return () => observer.disconnect()
-  }, [imageRef])
+        const tl = gsap.timeline({
+          defaults: { ease: "power1.out", force3D: true },
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => "+=" + Math.round(window.innerHeight * 2.4),
+            scrub: true,
+            pin: true,
+            anticipatePin: 1,
+          },
+        });
+
+        // --- Initial states ---
+        // LOVE is visible from the start
+        gsap.set(w1.current, {
+          y: 0,
+          autoAlpha: 1,
+          willChange: "transform, opacity",
+        });
+        // SERVE & RESTORE start offscreen and hidden
+        gsap.set(w2.current, {
+          y: offscreenY,
+          autoAlpha: 0,
+          willChange: "transform, opacity",
+        });
+        gsap.set(w3.current, {
+          y: offscreenY,
+          autoAlpha: 0,
+          willChange: "transform, opacity",
+        });
+
+        // Paragraph stays hidden initially
+        gsap.set(para.current, {
+          y: 80,
+          autoAlpha: 0,
+          willChange: "transform, opacity",
+        });
+
+        // --- Timeline ---
+        // SERVE appears from below
+        tl.to(w2.current, { y: 0, autoAlpha: 1, duration: 0.6 }, 0.15);
+        // RESTORE appears from below
+        tl.to(w3.current, { y: 0, autoAlpha: 1, duration: 0.6 }, 0.35);
+
+        // Move the whole group up
+        const moveUp = Math.round(window.innerHeight * 0.85);
+        tl.to(
+          groupRef.current,
+          { y: `-=${moveUp}`, duration: 0.8, ease: "power2.out" },
+          1.0
+        );
+
+        // Paragraph slides in
+        tl.to(para.current, { y: 0, autoAlpha: 1, duration: 0.7 }, 1.4);
+
+        // Hold
+        tl.to({}, { duration: 0.3 });
+      }
+    );
+  }, section);
+
+  return () => {
+    ctx.revert();
+    mm.revert();
+  };
+}, []);
 
   return (
-    <section id="mission" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-white">
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
-          {/* Parallax Image Section - FIXED VERSION */}
-          <div
-            ref={imageRef}
-            className="relative h-200 lg:h-[500px] overflow-hidden rounded-2xl shadow-lg sticky top-25"
-          >
+    <section
+      id="mission"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-[#f76a12]"
+    >
+      <div className="relative z-10 min-h-screen flex items-center justify-center">
+        <div className="max-w-6xl w-full px-4 lg:px-6 py-20"> {/* Reduced py from 32 to 20 */}
+          <div className="relative h-[60vh] md:h-[70vh] lg:h-[80vh] flex flex-col items-center justify-center"> {/* Reduced heights */}
             <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: "url('/DSC02562.jpg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed", // This creates the stagnant effect
-                transform: `translateY(${parallaxOffset * -0.0}px)`, // Move background slightly
-              }}
-            />
-
-            {/* Optional overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-          </div>
-
-          {/* Content Section - REMAINS THE SAME */}
-          <div>
-            <div className={`fade-in-up ${isVisible ? "animate" : ""}`} data-animate id="mission-title">
-              <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-primary">
-                  <Sparkles className="h-4 w-4" />
-                </span>
-                <span className="font-semibold text-primary">The Gap We Fill</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                <span className="text-foreground">Many children face impossible circumstances.</span>
-                <br />
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  We provide hope and stability.
-                </span>
-              </h2>
-              <p className="text-lg text-foreground/70 leading-relaxed mb-8">
-                Thousands of children in Zambia lack safe homes, proper nutrition, education and emotional support. Found and Loved Safe Home bridges this critical gap by providing comprehensive care, professional guidance and most
-                importantly, unconditional love for children in need.
-              </p>
-              <p className="text-lg text-foreground/70 leading-relaxed mb-8">
-                With a primary focus on children whose parents are currently in correctional care, we provide a safe, nurturing environment where they are supported and cared for until family reunification or placement with relatives is possible.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Mission Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {MISSION_ITEMS.map((item, idx) => (
-            <div
-              key={idx}
-              className={`scale-in bg-white rounded-2xl p-8 hover:shadow-lg transition-all duration-300 border border-border ${
-                isVisible ? "animate" : ""
-              }`}
-              data-animate
-              id={`mission-item-${idx}`}
-              style={{ animationDelay: `${idx * 100}ms` }}
+              ref={groupRef}
+              className="flex w-full flex-nowrap items-baseline justify-center gap-2 sm:gap-3 md:gap-8 lg:gap-12"
             >
-              {(() => {
-                const Icon = MISSION_ICONS[item.icon]
-                return Icon ? (
-                  <span className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                    <Icon className="h-7 w-7" />
-                  </span>
-                ) : null
-              })()}
-              <p className="text-sm font-semibold text-primary mb-2">{item.problem}</p>
-              <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
-              <p className="text-foreground/70">{item.desc}</p>
+              <div
+                ref={w1}
+                className="inline-block text-[clamp(1.3rem,6.25vw,2.75rem)] font-black leading-none tracking-tight text-white drop-shadow-lg md:text-[clamp(3.5rem,10vw,9rem)]"
+              >
+                EVERY
+              </div>
+              <div
+                ref={w2}
+                className="inline-block text-[clamp(1.3rem,6.25vw,2.75rem)] font-black leading-none tracking-tight text-white drop-shadow-lg md:text-[clamp(3.5rem,10vw,9rem)]"
+              >
+                CHILD
+              </div>
+              <div
+                ref={w3}
+                className="inline-block text-[clamp(1.3rem,6.25vw,2.75rem)] font-black leading-none tracking-tight text-white drop-shadow-lg md:text-[clamp(3.5rem,10vw,9rem)]"
+              >
+                MATTERS
+              </div>
             </div>
-          ))}
+
+            <div
+              ref={para}
+              className="mission-paragraph absolute z-30 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl text-center text-lg md:text-xl text-white/90"
+            >
+              <p className="leading-relaxed">
+                Found & Loved Children's Home was established by a compassionate Zambian couple in Chunga, Lusaka, after witnessing the growing number of vulnerable children who had nowhere safe to call home.
+
+                What began as a small act of kindness, opening their home to a few children in need, grew into a registered children's home recognized by Zambia's Ministry of Community Development and other relevant regulatory authorities.
+
+                Today, Found & Loved Children's Home provides care for approximately 20 children, offering them not only shelter but also love, stability, education, and hope for a brighter future.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
