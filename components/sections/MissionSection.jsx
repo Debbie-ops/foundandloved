@@ -104,11 +104,11 @@ export default function MissionSection() {
     <section
       id="mission"
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#f76a12]"
+      className="relative h-[clamp(38rem,82svh,52rem)] overflow-hidden bg-[#f76a12]"
     >
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
-        <div className="max-w-6xl w-full px-4 lg:px-6 py-20"> {/* Reduced py from 32 to 20 */}
-          <div className="relative h-[60vh] md:h-[70vh] lg:h-[80vh] flex flex-col items-center justify-center"> {/* Reduced heights */}
+      <div className="relative z-10 flex h-full items-center justify-center">
+        <div className="h-full w-full max-w-6xl px-4 py-12 lg:px-6">
+          <div className="relative flex h-full flex-col items-center justify-center">
             <div
               ref={groupRef}
               className="flex w-full flex-nowrap items-baseline justify-center gap-2 sm:gap-3 md:gap-8 lg:gap-12"
@@ -135,7 +135,7 @@ export default function MissionSection() {
 
             <div
               ref={para}
-              className="mission-paragraph absolute z-30 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl text-center text-lg md:text-xl text-white/90"
+              className="mission-paragraph absolute z-30 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl text-center text-sm leading-6 md:text-xl md:leading-relaxed text-white/90"
             >
               <p className="leading-relaxed">
                 Found & Loved Children's Home was established by a compassionate Zambian couple in Chunga, Lusaka, after witnessing the growing number of vulnerable children who had nowhere safe to call home.
